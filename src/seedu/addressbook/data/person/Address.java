@@ -14,6 +14,10 @@ public class Address {
 
     public final String value;
     private boolean isPrivate;
+    private Block block;
+    private Street street;
+    private Unit unit;
+    private PostalCode postalCode;
 
     /**
      * Validates given address.
@@ -23,17 +27,36 @@ public class Address {
     public Address(String address, boolean isPrivate) throws IllegalValueException {
         String trimmedAddress = address.trim();
         this.isPrivate = isPrivate;
-        if (!isValidAddress(trimmedAddress)) {
+        
+        String[] splitAddress = splitAddress(trimmedAddress);
+        if (!isValidAddress(splitAddress)) {
             throw new IllegalValueException(MESSAGE_ADDRESS_CONSTRAINTS);
         }
+        this.block = new Block(splitAddress[0]);
+        this.street = new Street(splitAddress[1]);
+        this.unit = new Unit(splitAddress[2]);
+        this.postalCode = new PostalCode(splitAddress[3]);
         this.value = trimmedAddress;
+    }
+    /**
+     * Returns array of address components.
+     */
+    public static String[] splitAddress(String addressToSplit) {
+    	String[] splitAddress = addressToSplit.split(", ");
+    	return splitAddress;
     }
 
     /**
      * Returns true if a given string is a valid person email.
      */
-    public static boolean isValidAddress(String test) {
-        return test.matches(ADDRESS_VALIDATION_REGEX);
+    public static boolean isValidAddress(String[] test) {
+        return test.length == 4;
+    }
+    /**
+     * Returns the concatenation of the values of the address.
+     */
+    public String getValue() {
+    	return block.getValue() + ", " + street.getValue() + ", " + unit.getValue() + ", " + postalCode.getValue();
     }
 
     @Override
