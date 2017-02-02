@@ -37,6 +37,7 @@ public class TextUi {
 
     private final Scanner in;
     private final PrintStream out;
+    private Formatter formatter;
 
     public TextUi() {
         this(System.in, System.out);
@@ -45,6 +46,7 @@ public class TextUi {
     public TextUi(InputStream in, PrintStream out) {
         this.in = new Scanner(in);
         this.out = out;
+        this.formatter = new Formatter();
     }
 
     /**
@@ -75,7 +77,7 @@ public class TextUi {
      * @return command (full line) entered by the user
      */
     public String getUserCommand() {
-        out.print(LINE_PREFIX + "Enter command: ");
+        out.print(formatter.getCommandPrompt());
         String fullInputLine = in.nextLine();
 
         // silently consume all ignored lines
@@ -83,37 +85,27 @@ public class TextUi {
             fullInputLine = in.nextLine();
         }
 
-        showToUser("[Command entered:" + fullInputLine + "]");
+        out.print(formatter.showToUser(formatter.getCommandEntered(fullInputLine)));
         return fullInputLine;
     }
 
 
     public void showWelcomeMessage(String version, String storageFilePath) {
-        String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
-        showToUser(
-                DIVIDER,
-                DIVIDER,
-                MESSAGE_WELCOME,
-                version,
-                MESSAGE_PROGRAM_LAUNCH_ARGS_USAGE,
-                storageFileInfo,
-                DIVIDER);
+        out.print(formatter.getWelcomeMessage(version, storageFilePath));
     }
 
     public void showGoodbyeMessage() {
-        showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
+    	out.print(formatter.getGoodbyeMessage());
     }
 
 
     public void showInitFailedMessage() {
-        showToUser(MESSAGE_INIT_FAILED, DIVIDER, DIVIDER);
+    	out.print(formatter.getInitFailedMessage());
     }
 
     /** Shows message(s) to the user */
     public void showToUser(String... message) {
-        for (String m : message) {
-            out.println(LINE_PREFIX + m.replace("\n", LS + LINE_PREFIX));
-        }
+    	out.print(formatter.showToUser(message));
     }
 
     /**
@@ -125,7 +117,7 @@ public class TextUi {
         if (resultPersons.isPresent()) {
             showPersonListView(resultPersons.get());
         }
-        showToUser(result.getFeedbackToUser(), DIVIDER);
+        out.print(formatter.showToUser(result.getFeedbackToUser(), DIVIDER));
     }
 
     /**
@@ -142,27 +134,7 @@ public class TextUi {
 
     /** Shows a list of strings to the user, formatted as an indexed list. */
     private void showToUserAsIndexedList(List<String> list) {
-        showToUser(getIndexedListForViewing(list));
+        out.print(formatter.showToUser(formatter.getIndexedListForViewing(list)));
     }
-
-    /** Formats a list of strings as a viewable indexed list. */
-    private static String getIndexedListForViewing(List<String> listItems) {
-        final StringBuilder formatted = new StringBuilder();
-        int displayIndex = 0 + DISPLAYED_INDEX_OFFSET;
-        for (String listItem : listItems) {
-            formatted.append(getIndexedListItem(displayIndex, listItem)).append("\n");
-            displayIndex++;
-        }
-        return formatted.toString();
-    }
-
-    /**
-     * Formats a string as a viewable indexed list item.
-     *
-     * @param visibleIndex visible index for this listing
-     */
-    private static String getIndexedListItem(int visibleIndex, String listItem) {
-        return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
-    }
-
+    
 }
