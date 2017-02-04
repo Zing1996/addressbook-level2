@@ -26,15 +26,24 @@ public class Formatter {
 
     /** Format of a comment input line. Comment lines are silently consumed when reading user input. */
     private static final String COMMENT_LINE_FORMAT_REGEX = "#.*";
-
+    
+    /*
+     * Returns string that asks for user to enter command
+     */
     public String getCommandPrompt() {
     	return LINE_PREFIX + "Enter command: ";
     }
     
+    /*
+     * Returns the command that user had entered in formatted manner
+     */
     public String getCommandEntered(String fullInputLine) {
     	return "[Command entered:" + fullInputLine + "]";
     }
-
+    
+    /*
+     * Returns welcome message
+     */
     public String getWelcomeMessage(String version, String storageFilePath) {
     	String storageFileInfo = String.format(MESSAGE_USING_STORAGE_FILE, storageFilePath);
         return showToUser(
@@ -48,14 +57,24 @@ public class Formatter {
     	
     }
     
+    /*
+     * Returns message which tells that initiation has failed
+     */
     public String getInitFailedMessage() {
     	return showToUser(MESSAGE_INIT_FAILED, DIVIDER, DIVIDER);
     }
     
+    /*
+     * Returns goodbye message
+     */
     public String getGoodbyeMessage() {
     	return showToUser(MESSAGE_GOODBYE, DIVIDER, DIVIDER);
     }
     
+    /*
+     * Returns a string of formatted messages from an array of lines
+     * of messages
+     */
     public String showToUser(String... message) {
     	String formattedMessage = "";
         for (String m : message) {
@@ -65,6 +84,9 @@ public class Formatter {
         return formattedMessage;
     }
     
+    /*
+     * Returns a string of messages with new line spacings and format
+     */
     public String getIndexedListForViewing(List<String> listItems) {
         final StringBuilder formatted = new StringBuilder();
         int displayIndex = 0 + DISPLAYED_INDEX_OFFSET;
@@ -75,6 +97,9 @@ public class Formatter {
         return formatted.toString();
     }
     
+    /*
+     * Returns formatted list of items with index
+     */
     private static String getIndexedListItem(int visibleIndex, String listItem) {
         return String.format(MESSAGE_INDEXED_LIST_ITEM, visibleIndex, listItem);
     }
