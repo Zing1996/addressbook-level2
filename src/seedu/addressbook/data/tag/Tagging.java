@@ -18,20 +18,36 @@ public class Tagging {
 	private Tag tag;
 	private TaggingOperation type;
 	
+	/**
+	 * 
+	 * Creates new tagging 
+	 */
 	public Tagging(Person person, Tag tag, TaggingOperation type) {
 		this.person = person;
 		this.tag = tag;
 		this.type = type;
 	}
 	
+	/**
+	 * 
+	 * Creates new tagging to add to taggingList with ADD operation
+	 */
 	public static void addTag(Person person, Tag tag) {
 		taggingList.add(new Tagging(person, tag, TaggingOperation.ADD));
 	}
 	
+	/**
+	 * 
+	 * Creates new tagging to add to taggingList with DELETE operation
+	 */
 	public static void deleteTag(Person person, Tag tag) {
 		taggingList.add(new Tagging(person, tag, TaggingOperation.DELETE));
 	}
 	
+	/**
+	 * 
+	 * Returns operation in String format
+	 */
 	public String getOperation() {
 		return type == TaggingOperation.ADD ? "+" : "-";
 	}
