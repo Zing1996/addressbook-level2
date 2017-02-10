@@ -45,14 +45,15 @@ public class Name {
     
     /**
      * Returns true of the other name is very similar to this name.
-     * Two names are considered similar if ...
+     * Two names are considered similar if they are in the same order
+     * and are the same strings regardless of caps or not
      */
      public boolean isSimilar(Name other) {
     	 if (other == null) {
     		 return false;
     	 }
     	 
-    	 if (this.fullName.equals(other.toString())) {
+    	 if (this.fullName.toLowerCase().equals(other.toString().toLowerCase())) {
     		 return true;
     	 } else {
     		 return false;

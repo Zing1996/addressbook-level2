@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import seedu.addressbook.data.exception.IllegalValueException;
 
+
 public class NameTest {
 
 	@Test
@@ -22,6 +23,10 @@ public class NameTest {
 		//Test for different object
 		Name secondPersonName = new Name("Tom");
 		assertFalse(firstPersonName.isSimilar(secondPersonName));
+		
+		//Test for case-sensitivity
+		Name firstPersonNameLowerCaps = new Name("john");
+		assertTrue(firstPersonName.isSimilar(firstPersonNameLowerCaps));
 	}
 
 }
