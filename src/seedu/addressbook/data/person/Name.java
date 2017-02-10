@@ -52,6 +52,10 @@ public class Name {
     		 return false;
     	 }
     	 
+    	 if (this.fullName.equals(other.toString())) {
+    		 return true;
+    	 }
+    	 
     	 return true;
      }
 

@@ -15,6 +15,9 @@ public class NameTest {
 		//Test for null 
 		Name firstPersonName = new Name("John");
 		assertFalse(firstPersonName.isSimilar(null));
+		
+		//Test for same object
+		assertTrue(firstPersonName.isSimilar(firstPersonName));
 	}
 
 }
