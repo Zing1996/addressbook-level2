@@ -16,17 +16,25 @@ public class NameTest {
 		//Test for null 
 		Name firstPersonName = new Name("John");
 		assertFalse(firstPersonName.isSimilar(null));
-		
+
 		//Test for same object
 		assertTrue(firstPersonName.isSimilar(firstPersonName));
-		
+
 		//Test for different object
 		Name secondPersonName = new Name("Tom");
+		Name thirdPersonName = new Name("John John");
+		Name firstPersonNameDuplicate = new Name("John");
 		assertFalse(firstPersonName.isSimilar(secondPersonName));
-		
+		assertFalse(firstPersonName.isSimilar(thirdPersonName));
+		assertTrue(firstPersonName.isSimilar(firstPersonNameDuplicate));
+
 		//Test for case-sensitivity
 		Name firstPersonNameLowerCaps = new Name("john");
+		Name firstPersonNameRandomCaps = new Name("JoHn");
 		assertTrue(firstPersonName.isSimilar(firstPersonNameLowerCaps));
+		assertTrue(firstPersonName.isSimilar(firstPersonNameRandomCaps));
+		assertTrue(firstPersonNameLowerCaps.isSimilar(firstPersonNameRandomCaps));
+
 	}
 
 }
