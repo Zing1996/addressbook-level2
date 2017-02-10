@@ -18,6 +18,10 @@ public class NameTest {
 		
 		//Test for same object
 		assertTrue(firstPersonName.isSimilar(firstPersonName));
+		
+		//Test for different object
+		Name secondPersonName = new Name("Tom");
+		assertFalse(firstPersonName.isSimilar(secondPersonName));
 	}
 
 }

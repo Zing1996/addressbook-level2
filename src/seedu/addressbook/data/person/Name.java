@@ -54,9 +54,9 @@ public class Name {
     	 
     	 if (this.fullName.equals(other.toString())) {
     		 return true;
+    	 } else {
+    		 return false;
     	 }
-    	 
-    	 return true;
      }
 
     @Override
